@@ -81,19 +81,19 @@ const products = [
   },
   {
     id: 6,
-    name: "Velvet Mist Perfume",
-    category: "Fragrance",
-    price: "$195",
+    name: "Add Your Product",
+    category: "Custom",
+    price: "—",
     rating: 5.0,
-    reviews: 52,
+    reviews: 0,
     image: HERO_IMAGE,
-    tag: "Exclusive",
-    description: "Oud, black iris and warm amber. A statement fragrance that commands a room.",
-    reviewsList: [
-      { name: "Valentina C.", rating: 5, text: "I get compliments every single time I wear this. Utterly addictive.", date: "May 2026" },
-    ],
+    tag: "Coming Soon",
+    description: "We're always expanding our collection. Got something special in mind? Contact us and we'll add it to the shop.",
+    reviewsList: [],
   },
 ];
+
+const EDITABLE_NOTE = "Want to add your own products? Just message us — we'll update the shop for you instantly.";
 
 function StarRating({ rating, size = 14 }: { rating: number; size?: number }) {
   return (
@@ -173,7 +173,7 @@ export default function Index() {
   const [formSent, setFormSent] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const categories = ["All", "Skincare", "Makeup", "Fragrance"];
+  const categories = ["All", "Skincare", "Makeup", "Custom"];
   const filtered = activeCategory === "All" ? products : products.filter(p => p.category === activeCategory);
 
   const scrollTo = (id: string) => {
@@ -201,13 +201,13 @@ export default function Index() {
         </button>
 
         <div className="hidden md:flex items-center gap-10">
-          {["home", "products", "contact"].map((s) => (
+          {["home", "story", "products", "contact"].map((s) => (
             <button
               key={s}
               onClick={() => scrollTo(s)}
               className={`nav-link font-body text-xs tracking-widest uppercase text-[rgba(240,232,216,0.7)] hover:text-[var(--gold)] transition-colors ${activeSection === s ? "active text-[var(--gold)]" : ""}`}
             >
-              {s}
+              {s === "story" ? "Our Story" : s}
             </button>
           ))}
         </div>
@@ -230,13 +230,13 @@ export default function Index() {
       {/* MOBILE MENU */}
       {menuOpen && (
         <div className="fixed inset-0 z-30 bg-obsidian flex flex-col items-center justify-center gap-10 animate-fade-in">
-          {["home", "products", "contact"].map((s) => (
+          {["home", "story", "products", "contact"].map((s) => (
             <button
               key={s}
               onClick={() => scrollTo(s)}
               className="font-display text-4xl italic text-[var(--cream)] hover:text-[var(--gold)] transition-colors capitalize"
             >
-              {s}
+              {s === "story" ? "Our Story" : s}
             </button>
           ))}
         </div>
@@ -251,22 +251,21 @@ export default function Index() {
 
         <div className="relative z-10 px-8 md:px-20 pt-24 max-w-4xl">
           <p className="font-body text-xs tracking-[0.3em] uppercase text-[var(--gold)] mb-6 opacity-0 animate-fade-up delay-100">
-            Artisan Luxury Beauty
+            Proud to Serve Our Customers
           </p>
           <h1 className="font-display text-6xl md:text-8xl text-[var(--cream)] leading-none mb-4 opacity-0 animate-fade-up delay-200">
             Where Beauty<br />
             <em className="gold-shimmer">Becomes Art</em>
           </h1>
           <p className="font-body text-sm md:text-base text-[rgba(240,232,216,0.55)] max-w-md leading-relaxed mb-10 opacity-0 animate-fade-up delay-300 font-light">
-            Handcrafted formulas, rare botanicals, and a commitment to beauty that transcends the ordinary.
-            For those who refuse to be forgotten.
+            We are proud to bring our customers the finest cosmetics, handpicked with care. Explore our shop — built by four young men with a dream and the drive to make it real.
           </p>
           <div className="flex items-center gap-4 opacity-0 animate-fade-up delay-400">
             <button onClick={() => scrollTo("products")} className="btn-gold px-8 py-3.5 rounded-sm">
-              Explore Collection
+              Explore Our Shop
             </button>
-            <button className="btn-outline-gold px-8 py-3.5 rounded-sm">
-              Our Story
+            <button onClick={() => scrollTo("story")} className="btn-outline-gold px-8 py-3.5 rounded-sm">
+              How We Started
             </button>
           </div>
 
@@ -303,14 +302,73 @@ export default function Index() {
         </div>
       </div>
 
+      {/* OUR STORY */}
+      <section id="story" className="py-24 px-8 md:px-16 bg-charcoal">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="font-body text-xs tracking-[0.3em] uppercase text-[var(--gold)] mb-3">How We Started</p>
+            <h2 className="font-display text-5xl md:text-6xl text-[var(--cream)]">
+              Four boys. One <em>big dream.</em>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+            <div className="space-y-6">
+              <p className="font-body text-sm text-[rgba(240,232,216,0.65)] leading-loose">
+                It started in a bedroom. Four 16-year-olds — broke, ambitious, and absolutely tired of waiting for "someday." We'd seen enough of people our age scroll past opportunities, so we decided to build one instead.
+              </p>
+              <p className="font-body text-sm text-[rgba(240,232,216,0.65)] leading-loose">
+                We pooled what little money we had, did our research, and fell in love with cosmetics — a space where confidence is sold in a bottle, where a product can genuinely change how someone carries themselves through the day. We wanted a piece of that.
+              </p>
+              <p className="font-body text-sm text-[rgba(240,232,216,0.65)] leading-loose">
+                BDH wasn't born in a boardroom. It was born at 2am, debating product names over a group chat, sketching logos on notebook paper, arguing about prices and laughing about how far-fetched the whole thing seemed. And then we did it anyway.
+              </p>
+              <p className="font-body text-sm text-[rgba(240,232,216,0.65)] leading-loose">
+                Today, we're still those same four boys — just with a real shop, real customers, and a real hunger to grow something we're genuinely proud of. Every product we carry, we believe in. Every customer we serve, we appreciate deeply.
+              </p>
+              <p className="font-display text-xl italic text-[var(--gold)]">
+                "We're not waiting to grow up to chase our goals. We're doing it now."
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: "Users", title: "4 Founders", sub: "All 16. All in." },
+                { icon: "Flame", title: "Pure Hustle", sub: "Built from nothing" },
+                { icon: "Heart", title: "Customer First", sub: "Always proud to serve" },
+                { icon: "TrendingUp", title: "Growing Fast", sub: "Just getting started" },
+              ].map(({ icon, title, sub }) => (
+                <div key={title} className="border border-[rgba(201,168,76,0.12)] rounded-sm p-6 bg-obsidian flex flex-col gap-3">
+                  <div className="w-9 h-9 rounded-sm gold-gradient flex items-center justify-center" style={{ color: '#0E0C0A' }}>
+                    <Icon name={icon} size={16} />
+                  </div>
+                  <div>
+                    <div className="font-display text-lg text-[var(--cream)]">{title}</div>
+                    <div className="font-body text-xs text-[rgba(240,232,216,0.4)] mt-0.5">{sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border border-[rgba(201,168,76,0.15)] rounded-sm p-8 bg-obsidian text-center">
+            <p className="font-display text-2xl italic text-[rgba(240,232,216,0.85)] mb-4">
+              "We are proud to sell to every single one of our customers. You're not just buying a product — you're supporting four teenagers who refused to give up."
+            </p>
+            <div className="section-divider mx-auto mb-4" />
+            <p className="font-body text-xs text-[rgba(240,232,216,0.4)] tracking-widest uppercase">— The BDH Team</p>
+          </div>
+        </div>
+      </section>
+
       {/* PRODUCTS */}
       <section id="products" className="py-24 px-8 md:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
-              <p className="font-body text-xs tracking-[0.3em] uppercase text-[var(--gold)] mb-3">The Collection</p>
+              <p className="font-body text-xs tracking-[0.3em] uppercase text-[var(--gold)] mb-3">Our Collection</p>
               <h2 className="font-display text-5xl md:text-6xl text-[var(--cream)]">
-                Curated for<br /><em>the discerning</em>
+                Proud to sell<br /><em>every one of these</em>
               </h2>
             </div>
             <div className="flex gap-2 flex-wrap">
@@ -495,20 +553,38 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-[rgba(201,168,76,0.1)] py-10 px-8 md:px-16">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="font-display text-lg tracking-widest text-[var(--cream)]">
-            BDH <span className="font-body font-light tracking-widest text-xs" style={{ color: 'var(--gold)' }}>COSMETICS</span>
+      <footer className="border-t border-[rgba(201,168,76,0.1)] pt-12 pb-8 px-8 md:px-16">
+        <div className="max-w-7xl mx-auto">
+          {/* BDH Tweaks Banner */}
+          <div className="border border-[rgba(201,168,76,0.2)] rounded-sm p-6 mb-10 flex flex-col md:flex-row items-center justify-between gap-4 bg-[rgba(201,168,76,0.04)]">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 gold-gradient rounded-sm flex items-center justify-center flex-shrink-0" style={{ color: '#0E0C0A' }}>
+                <Icon name="Zap" size={18} />
+              </div>
+              <div>
+                <div className="font-display text-lg text-[var(--cream)]">We also sell <em className="text-[var(--gold)]">BDH Tweaks</em></div>
+                <div className="font-body text-xs text-[rgba(240,232,216,0.45)] mt-0.5">Check out our exclusive tweaks — another way we're building for you.</div>
+              </div>
+            </div>
+            <button onClick={() => scrollTo("contact")} className="btn-outline-gold px-6 py-2.5 rounded-sm whitespace-nowrap">
+              Learn More
+            </button>
           </div>
-          <p className="font-body text-xs text-[rgba(240,232,216,0.3)] tracking-wider">
-            © 2026 BDH Cosmetics. All rights reserved. Crafted with care.
-          </p>
-          <div className="flex gap-6">
-            {["Instagram", "Facebook", "Twitter"].map(social => (
-              <button key={social} className="font-body text-xs tracking-widest text-[rgba(240,232,216,0.35)] hover:text-[var(--gold)] transition-colors uppercase">
-                {social}
-              </button>
-            ))}
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="font-display text-lg tracking-widest text-[var(--cream)]">
+              BDH <span className="font-body font-light tracking-widest text-xs" style={{ color: 'var(--gold)' }}>COSMETICS</span>
+            </div>
+            <p className="font-body text-xs text-[rgba(240,232,216,0.3)] tracking-wider text-center">
+              © 2026 BDH Cosmetics & BDH Tweaks. Built by four 16-year-olds who refused to wait.
+            </p>
+            <div className="flex gap-6">
+              {["Instagram", "Facebook", "Twitter"].map(social => (
+                <button key={social} className="font-body text-xs tracking-widest text-[rgba(240,232,216,0.35)] hover:text-[var(--gold)] transition-colors uppercase">
+                  {social}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </footer>
